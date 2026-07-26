@@ -1,0 +1,27 @@
+" Default: don't expand tabs (good for Makefiles)
+set noexpandtab
+
+" Python: use spaces
+autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=4
+
+" C: use spaces
+autocmd FileType c setlocal expandtab shiftwidth=4 tabstop=4
+
+" Makefiles: force literal tabs
+autocmd FileType make setlocal noexpandtab
+
+set number
+let g:molokai_original = 1
+
+" vim -b : edit binary using xxd-format!
+augroup Binary
+  au!
+  au BufReadPre  *.bin let &bin=1
+  au BufReadPost *.bin if &bin | %!xxd
+  au BufReadPost *.bin set ft=xxd | endif
+  au BufWritePre *.bin if &bin | %!xxd -r
+  au BufWritePre *.bin endif
+  au BufWritePost *.bin if &bin | %!xxd
+  au BufWritePost *.bin set nomod | endif
+augroup END
+
