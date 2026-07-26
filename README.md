@@ -7,13 +7,13 @@ Personal configuration managed with [chezmoi](https://www.chezmoi.io/).
 Install chezmoi, then initialize this repository:
 
 ```sh
-chezmoi init --apply <git-repository-url>
+chezmoi init --apply git@github.com:trigili/dotfiles.git
 ```
 
 For a one-line bootstrap on Linux or macOS:
 
 ```sh
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply <git-repository-url>
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply git@github.com:trigili/dotfiles.git
 ```
 
 The shell configuration works without optional tools, but the full setup uses:
