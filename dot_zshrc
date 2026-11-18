@@ -139,3 +139,40 @@ export PATH="$HOME/.local/bin:$PATH"
 # onWatch
 export PATH="$HOME/.onwatch:$PATH"
 
+
+# >>> Codex installer >>>
+export PATH="/home/jared/.local/bin:$PATH"
+# <<< Codex installer <<<
+
+# Codex agent resource guard
+codex() {
+  /home/jared/.local/bin/codex-guarded "$@"
+}
+
+# Take md back from oh my zsh
+unalias md 2>/dev/null
+
+# Alias md to markdown renderer
+function md() {
+  if (( $# != 1 )); then
+    print -u2 "Usage: md <file.md>"
+    return 2
+  fi
+
+  local input="$1"
+  local output
+
+  output=$(mktemp --tmpdir="${TMPDIR:-/tmp}" --suffix=.html md-preview.XXXXXX) || return
+  if ! pandoc --standalone -o "$output" "$input"; then
+    rm -f -- "$output"
+    return 1
+  fi
+
+  xdg-open "$output"
+}
+
+
+# Use the current desktop display in tmux panes that have none.
+if [[ -n ${TMUX-} && -r $HOME/.config/zsh/tmux-gui.zsh ]]; then
+  source "$HOME/.config/zsh/tmux-gui.zsh"
+fi
